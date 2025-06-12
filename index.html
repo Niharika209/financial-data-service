@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Stock Ticker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #0f0;
+      text-align: center;
+      padding-top: 50px;
+    }
+    #ticker {
+      font-size: 2em;
+      margin-top: 30px;
+      padding: 20px;
+      background: #222;
+      display: inline-block;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📈 Live Stock Price Ticker</h1>
+  <div id="ticker">Connecting to server...</div>
+
+  <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+  <script>
+    const socket = io("ws://localhost:5000");
+
+    const ticker = document.getElementById("ticker");
+
+    socket.on("connect", () => {
+      ticker.innerHTML = "🔌 Connected to server...";
+    });
+
+    socket.on("priceUpdate", (data) => {
+      ticker.innerHTML = `
+        <strong>${data.symbol}</strong><br>
+        ₹${data.price}<br>
+        <small>${new Date(data.timestamp).toLocaleTimeString()}</small>
+      `;
+    });
+
+    socket.on("disconnect", () => {
+      ticker.innerHTML = "⚠️ Disconnected from server.";
+    });
+  </script>
+
+</body>
+</html>
