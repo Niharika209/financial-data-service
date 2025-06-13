@@ -17,7 +17,7 @@ A backend prototype for simulating a financial data service. Built with Node.js,
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/financial-data-service.git
+git clone https://github.com/Niharika209/financial-data-service
 cd financial-data-service
 ```
 
